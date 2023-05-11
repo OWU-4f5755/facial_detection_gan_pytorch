@@ -16,3 +16,4 @@ venv/
 *.jpeg
 *.dat.bz2
 *.dat
+stylegan2-ada-pytorch/
