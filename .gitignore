@@ -1,0 +1,16 @@
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+dist/
+build/
+*.code-workspace
+.conda/
+*.zshrc*
+venv/
+*.vscode/
+*.DS_Store
+*.log
+*.jpg
+*.png
+*.jpeg
