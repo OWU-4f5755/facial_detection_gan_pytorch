@@ -69,44 +69,81 @@ FREEZE_STEPS = 30
 #   print("Upload at least 2 images for morphing.")
 
 # %%
-import os
-import tkinter as tk
-from tkinter import filedialog
 
-NETWORK = "https://nvlabs-fi-cdn.nvidia.com/stylegan2-ada-pytorch/pretrained/ffhq.pkl"
-STEPS = 150
-FPS = 30
-FREEZE_STEPS = 30
+import os
+import glob
+
+def select_images_from_directory(directory, extensions=('*.png', '*.jpg', '*.jpeg')):
+    image_files = []
+    for ext in extensions:
+        image_files.extend(glob.glob(os.path.join(directory, ext)))
+
+    return image_files
 
 project_root = "/Users/oscarwu_admin_1.0/repos/facial_detection_gan_pytorch"
+image_files = select_images_from_directory(project_root)
 
-def open_file_dialog():
-    root = tk.Tk()
-    root.withdraw()  # Hide the main window
-    file_paths = filedialog.askopenfilenames(
-        title="Select at least 2 images for morphing",
-        filetypes=[("Image files", "*.png;*.jpg;*.jpeg")],
-        initialdir=project_root
-    )
-    return list(file_paths)
+if len(image_files) < 2:
+    print("Please make sure there are at least 2 images for morphing in the project directory.")
+else:
+    print(f"Selected images: {image_files}")
 
-img_list = open_file_dialog()
+# import os
+# import tkinter as tk
+# from tkinter import filedialog
 
-if len(img_list) < 2:
-    print("Upload at least 2 images for morphing.")
+# project_root = "/Users/oscarwu_admin_1.0/repos/facial_detection_gan_pytorch"
+
+# def open_file_dialog():
+#     root = tk.Tk()
+#     root.withdraw()  # Hide the main window
+#     file_paths = filedialog.askopenfilenames(
+#         title="Select at least 2 images for morphing",
+#         # filetypes=[("Image files", "*.png;*.jpg;*.jpeg;*.PNG;*.JPG;*.JPEG")],
+#         filetypes=[("All files", "*.*")],
+#         initialdir=project_root
+#     )
+#     return list(file_paths)
+
+# img_list = open_file_dialog()
+
+# if len(img_list) < 2:
+#     print("Upload at least 2 images for morphing.")
+
 # %%
-# HIDE OUTPUT
-# 5 facial landmark predictor - base of mouth and nose
-!wget http://dlib.net/files/shape_predictor_5_face_landmarks.dat.bz2
-!bzip2 -d shape_predictor_5_face_landmarks.dat.bz2
+# # HIDE OUTPUT
+# # 5 facial landmark predictor - base of mouth and nose
+# !wget http://dlib.net/files/shape_predictor_5_face_landmarks.dat.bz2
+# !bzip2 -d shape_predictor_5_face_landmarks.dat.bz2
 
-# HIDE OUTPUT
+# # HIDE OUTPUT
+# import sys
+# !git clone https://github.com/NVlabs/stylegan2-ada-pytorch.git
+# !pip install ninja
+# sys.path.insert(0, "/content/stylegan2-ada-pytorch")
+
+import subprocess
 import sys
-!git clone https://github.com/NVlabs/stylegan2-ada-pytorch.git
-!pip install ninja
-sys.path.insert(0, "/content/stylegan2-ada-pytorch")
+import os
 
-import cv2
+# Download and extract shape_predictor_5_face_landmarks.dat
+subprocess.run("wget http://dlib.net/files/shape_predictor_5_face_landmarks.dat.bz2", shell=True, check=True)
+subprocess.run("bzip2 -d shape_predictor_5_face_landmarks.dat.bz2", shell=True, check=True)
+
+# Clone StyleGAN2-ada-pytorch repository and install requirements
+subprocess.run("git clone https://github.com/NVlabs/stylegan2-ada-pytorch.git", shell=True, check=True)
+subprocess.run("pip install ninja", shell=True, check=True)
+
+# Assuming your project root is "/Users/oscarwu_admin_1.0/repos/facial_detection_gan_pytorch"
+project_root = "/Users/oscarwu_admin_1.0/repos/facial_detection_gan_pytorch"
+stylegan2_ada_pytorch_path = os.path.join(project_root, "stylegan2-ada-pytorch")
+sys.path.insert(0, stylegan2_ada_pytorch_path)
+
+# Check sys.path
+print(sys.path)  # ['/Users/oscarwu_admin_1.0/repos/facial_detection_gan_pytorch/stylegan2-ada-pytorch', '/Users/oscarwu_admin_1.0/repos/facial_detection_gan_pytorch', '/Users/oscarwu_admin_1.0/miniconda3/envs/facial_detection_gan_pytorch/lib/python39.zip', '/Users/oscarwu_admin_1.0/miniconda3/envs/facial_detection_gan_pytorch/lib/python3.9', '/Users/oscarwu_admin_1.0/miniconda3/envs/facial_detection_gan_pytorch/lib/python3.9/lib-dynload', '', '/Users/oscarwu_admin_1.0/.local/lib/python3.9/site-packages', '/Users/oscarwu_admin_1.0/miniconda3/envs/facial_detection_gan_pytorch/lib/python3.9/site-packages']
+
+# %%
+import cv2  # No module named 'cv2'
 import numpy as np
 from PIL import Image
 import dlib
@@ -157,6 +194,9 @@ def process_images(img_list):
 
 cropped_images = process_images(img_list)
 
+print(f"This is the number of cropped images: {len(cropped_images)}")
+
+# %%
 # Generate GAN images and latent vectors for each input image
 gan_images = []
 latent_vectors = []
