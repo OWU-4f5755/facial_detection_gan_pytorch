@@ -17,33 +17,33 @@ print(f"Scikit-Learn {sk.__version__}")
 print(f"GPU is {'available' if has_gpu else 'NOT AVAILABLE'}")
 print(f"MPS (Apple Metal) is {'AVAILABLE' if has_mps else 'NOT AVAILABLE'}")
 print(f"Target device is {device}")
+
+# %%bash
+# # No need to activate conda environment here
+# # conda activate facial_detection_gan_pytorch
+
+# # Download and extract shape_predictor_5_face_landmarks.dat
+# wget http://dlib.net/files/shape_predictor_5_face_landmarks.dat.bz2
+# bzip2 -d shape_predictor_5_face_landmarks.dat.bz2
+
+# # Clone StyleGAN2-ada-pytorch repository and install requirements
+# git clone https://github.com/NVlabs/stylegan2-ada-pytorch.git
+# pip install ninja
+
 # %%
-%%bash
-# No need to activate conda environment here
-# conda activate facial_detection_gan_pytorch
+# %%bash
 
-# Download and extract shape_predictor_5_face_landmarks.dat
-wget http://dlib.net/files/shape_predictor_5_face_landmarks.dat.bz2
-bzip2 -d shape_predictor_5_face_landmarks.dat.bz2
+# echo "Current working directory:"
+# pwd
 
-# Clone StyleGAN2-ada-pytorch repository and install requirements
-git clone https://github.com/NVlabs/stylegan2-ada-pytorch.git
-pip install ninja
+# echo "Listing files in the current working directory:"
+# ls
 
-# %%
-%%bash
+# echo "Listing files in the StyleGAN2-ada-pytorch directory:"
+# ls stylegan2-ada-pytorch
 
-echo "Current working directory:"
-pwd
-
-echo "Listing files in the current working directory:"
-ls
-
-echo "Listing files in the StyleGAN2-ada-pytorch directory:"
-ls stylegan2-ada-pytorch
-
-echo "Finding the location of the ninja package:"
-pip show ninja
+# echo "Finding the location of the ninja package:"
+# pip show ninja
 
 # %%
 # import os
@@ -132,10 +132,6 @@ print("Current sys.path:")
 print(sys.path)
 
 # %%
-!pwd
-
-# %%
-
 # HIDE OUTPUT
 # 5 facial landmark predictor - base of mouth and nose
 # !wget http://dlib.net/files/shape_predictor_5_face_landmarks.dat.bz2
@@ -178,22 +174,12 @@ sys.path.insert(1, project_directory)
 print(sys.path)
 
 # %%
-!git clone https://github.com/NVlabs/stylegan2-ada-pytorch.git
-
-# %%
-!python -c "import cv2; print(cv2.__file__)"
-
-# %%
-!pip install ninja
-
-# %%
-
 # import cv2
 # import numpy as np
 # from PIL import Image
 # import dlib
 # from matplotlib import pyplot as plt
-import cv2
+import cv2 # !!! Why is this not importing?
 import numpy as np
 from PIL import Image
 import dlib
@@ -206,12 +192,8 @@ import numpy as np
 import imageio
 from tqdm import tqdm
 
-
-# %%
-
 detector = dlib.get_frontal_face_detector()
 predictor = dlib.shape_predictor('shape_predictor_5_face_landmarks.dat')
-
 
 # %%
 
