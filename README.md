@@ -1,29 +1,13 @@
-# Project Title
+# Advanced Facial Image Morphing with Latent Space Interpolation using StyleGAN2 and Dlib ResNET
 
 ## Summary
-Brief description of the project and its purpose.
+Developed a comprehensive end-to-end pipeline that processes input images, utilizes a pretrained StyleGAN2 model to project them into the latent space, and generates a smooth morphing video between facial images through latent space interpolation.
 
-## Features
-- Feature 1
-- Feature 2
-- Feature 3
+## Key Features
+1. Utilized the state-of-the-art StyleGAN2 generative model to produce realistic and high-quality face morphing videos.
+2. Automated facial landmark detection and cropping using a well-established, pretrained neural network library, enhancing input image compatibility with the StyleGAN2 model.
+3. Implemented a seamless pipeline that can be executed on Google Colab, offering an accessible platform with GPU support for widespread use.
 
-## Technologies
-- Language 1
-- Library 1
-- Framework 1
-- Tool 1
-
-## Installation
-1. Step 1
-2. Step 2
-3. Step 3
-
-## Usage
-Example or code snippet to demonstrate how to use the project.
-
-## License
-Brief note about the project's license and a link to the full license text.
-
-## Contact
-Your contact information and an invitation to reach out for questions or feedback.
+## Possible Future Directions
+1. Upgrade to dlib's 68-point facial landmark model for better alignment of the input images and more visually aesthetic morphing videos.
+2. Local implementation of this pipeline with MPS (Apple Metal) acceleration vs. using Google Colab's cloud platform.
