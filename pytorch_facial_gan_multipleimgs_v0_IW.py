@@ -24,6 +24,14 @@ print(f'PyTorch Version: {pytorch_version}')
 print(f'GPU is {"available" if has_gpu else "NOT AVAILABLE"}')
 print(f'MPS (Apple Metal) is {"AVAILABLE" if has_mps else "NOT AVAILABLE"}')
 print(f'Target device is {device}')
+# Python Platform: macOS-13.3.1-arm64-arm-64bit
+# Python 3.9.16
+# Pandas 2.0.1
+# Scikit-Learn 1.2.2
+# PyTorch Version: 2.1.0.dev20230507
+# GPU is NOT AVAILABLE
+# MPS (Apple Metal) is AVAILABLE
+# Target device is mps
 
 # %%
 # !!! IMPORTANT !!! this .py version = the fully functioning code seen in Google Colab for this project.
@@ -32,15 +40,6 @@ print(f'Target device is {device}')
 # drive.mount('/content/drive')
 
 # %%
-# # Commented out IPython magic to ensure Python compatibility.
-# try:
-#     # %tensorflow_version 2.x
-#     COLAB = True
-#     print("Note: using Google CoLab")
-# except:
-#     print("Note: not using Google CoLab")
-#     COLAB = False
-
 # stylegan2 yielded better results than stylegan3 for feature vectors of selfies, so I'll use v2
 # 150 imgs for imgs b/w 2 imgs uploaded
 # 30 images @ beginning and end since otherwise it's just jumping sequences
@@ -51,23 +50,51 @@ STEPS = 150
 FPS = 30
 FREEZE_STEPS = 30
 
+# %%
 # HIDE OUTPUT
+# import os
+# from google.colab import files
+
+# uploaded_files = files.upload()
+
+# img_list = []
+# for k, v in uploaded_files.items():
+#     _, ext = os.path.splitext(k)
+#     os.remove(k)
+#     image_name = f"{k}{ext}"
+#     open(image_name, 'wb').write(v)
+#     img_list.append(image_name)
+
+# if len(img_list) < 2:
+#   print("Upload at least 2 images for morphing.")
+
+# %%
 import os
-from google.colab import files
+import tkinter as tk
+from tkinter import filedialog
 
-uploaded_files = files.upload()
+NETWORK = "https://nvlabs-fi-cdn.nvidia.com/stylegan2-ada-pytorch/pretrained/ffhq.pkl"
+STEPS = 150
+FPS = 30
+FREEZE_STEPS = 30
 
-img_list = []
-for k, v in uploaded_files.items():
-    _, ext = os.path.splitext(k)
-    os.remove(k)
-    image_name = f"{k}{ext}"
-    open(image_name, 'wb').write(v)
-    img_list.append(image_name)
+project_root = "/Users/oscarwu_admin_1.0/repos/facial_detection_gan_pytorch"
+
+def open_file_dialog():
+    root = tk.Tk()
+    root.withdraw()  # Hide the main window
+    file_paths = filedialog.askopenfilenames(
+        title="Select at least 2 images for morphing",
+        filetypes=[("Image files", "*.png;*.jpg;*.jpeg")],
+        initialdir=project_root
+    )
+    return list(file_paths)
+
+img_list = open_file_dialog()
 
 if len(img_list) < 2:
-  print("Upload at least 2 images for morphing.")
-
+    print("Upload at least 2 images for morphing.")
+# %%
 # HIDE OUTPUT
 # 5 facial landmark predictor - base of mouth and nose
 !wget http://dlib.net/files/shape_predictor_5_face_landmarks.dat.bz2
