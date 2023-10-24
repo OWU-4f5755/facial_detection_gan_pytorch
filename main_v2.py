@@ -173,8 +173,7 @@ def crop_stylegan(img):
     right, bottom = left + size, top + size
 
     cropped_img = img[top:bottom, left:right]
-    cropped_img = cv2.resize(cropped_img, (1024, 1024))
-    return cropped_img
+    return cv2.resize(cropped_img, (1024, 1024))
 
 def process_images(img_list):
     cropped_images = []

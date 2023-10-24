@@ -81,17 +81,16 @@ STEPS = 150
 FPS = 30
 FREEZE_STEPS = 30
 
-# Read image files
-img_list = []
-for file in os.listdir(project_root):
-    if file.endswith((".jpg", ".jpeg", ".png", ".bmp")):
-        img_list.append(file)
-
+img_list = [
+    file
+    for file in os.listdir(project_root)
+    if file.endswith((".jpg", ".jpeg", ".png", ".bmp"))
+]
 if len(img_list) < 2:
     print("Upload at least 2 images for morphing.")
 
 # %%
-if len(img_list) > 0:
+if img_list:
     print("The images have been read.")
 
 # %%
@@ -218,8 +217,7 @@ def crop_stylegan(img):
     right, bottom = left + size, top + size
 
     cropped_img = img[top:bottom, left:right]
-    cropped_img = cv2.resize(cropped_img, (1024, 1024))
-    return cropped_img
+    return cv2.resize(cropped_img, (1024, 1024))
 
 def process_images(img_list):
     cropped_images = []
